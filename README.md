@@ -72,7 +72,7 @@ This is a simple Expense Tracker API built with Flask and PostgreSQL. The API al
     ```
 
 ## Project Structure
-
+```
 expense-tracker-api/
 ├── app/
 │ ├── init.py
@@ -94,7 +94,7 @@ expense-tracker-api/
 ├── migrations/
 ├── requirements.txt
 └── README.md
-
+```
 
 ## API Endpoints
 
@@ -190,6 +190,7 @@ expense-tracker-api/
 
 
 ### Reports
+
 
 - **GET** `/reports/monthly/<int:year>/<int:month>`
     Get monthly report for the specified year and month.
