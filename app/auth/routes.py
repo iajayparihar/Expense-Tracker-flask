@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from .models import User
 from app.extensions import db, jwt
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required
 from . import auth_bp
 
 @auth_bp.route('/register', methods=['POST'])
@@ -30,6 +30,7 @@ def login():
 
 
 @auth_bp.route('/allusers',methods=['GET'])
+@jwt_required()
 def getting_all_users():
         users = User.query.all()
         output = []
@@ -39,12 +40,12 @@ def getting_all_users():
             user_data['name'] = user.name
             user_data['email'] = user.email
             user_data['mobile'] = user.mobile
-            # user_data['password'] =  user.password
             output.append(user_data)
         return jsonify({'users': output}),200
 
 
 @auth_bp.route('/update/<int:id>',methods=['put'])
+@jwt_required()
 def user_update_model(id):
         user = User.query.get(id)
         if not user:
@@ -64,6 +65,7 @@ def user_update_model(id):
             return jsonify({'msg':'Please fill all the fields'}),400
 
 @auth_bp.route('/update/<int:id>',methods=['patch'])
+@jwt_required()
 def user_patch_update(id):
         user = User.query.get(id)
         if not user:
@@ -91,6 +93,7 @@ def user_patch_update(id):
 
 
 @auth_bp.route('/delete/<int:id>',methods=['delete'])
+@jwt_required()
 def user_delete_model(id):
         user = User.query.get(id)
         if not user:
