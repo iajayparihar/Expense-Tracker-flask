@@ -1,5 +1,6 @@
 from flask import Flask
 from .extensions import db, jwt
+
 from .auth.routes import auth_bp
 from .expenses.routes import expenses_bp
 from .reports.routes import reports_bp
