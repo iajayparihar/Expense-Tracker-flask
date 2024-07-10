@@ -108,7 +108,10 @@ expense-tracker-api/
   ```json
     {
         "username": "user",
-        "password": "password"
+        "password": "password",
+        "name": "User Name",
+        "email": "user@example.com",
+        "mobile": "1234567890"
     }
 
 
@@ -122,6 +125,38 @@ expense-tracker-api/
         "username": "user",
         "password": "password"
     }
+
+- **GET** `/auth/allusers`
+
+    Get all registered users.
+
+    Header:
+            Authorization: Bearer <JWT Token>
+
+
+- **PUT** `/auth/update/<int:id>`
+
+    Update user details.
+
+    Header:
+            Authorization: Bearer <JWT Token>
+    
+    Request body (optional fields):
+    ```json
+    {
+        "name": "Updated Name",
+        "email": "updated@example.com",
+        "mobile": "0987654321",
+        "password": "newpassword"
+    }
+
+
+- **DELETE** ` /auth/delete/<int:id>`
+
+    Delete a user by ID.
+
+    Header:
+            Authorization: Bearer <JWT Token>
 
 
 ### Expenses
@@ -188,6 +223,50 @@ expense-tracker-api/
     Header:
             Authorization: Bearer <JWT Token>
 
+
+
+### Categories
+GET 
+- **GET** `/categories`
+    Get all categories.
+
+    Header:
+            Authorization: Bearer <JWT Token>
+
+
+- **POST** `/categories`
+    Add a new category.
+
+    Header:
+            Authorization: Bearer <JWT Token>
+
+    Request body:
+    ```json
+    {
+        "name": "New Category"
+    }
+
+
+- **PUT** `/categories/<int:id>`
+    Update a category by ID.
+
+    Header:
+            Authorization: Bearer <JWT Token>
+
+    Request body:
+    ```json
+    {
+        "name": "Updated Category"
+    }
+
+
+- **DELETE** `/categories/<int:id>`
+    
+    Delete a category by ID.
+    
+    Header:
+            Authorization: Bearer <JWT Token>
+            
 
 ### Reports
 

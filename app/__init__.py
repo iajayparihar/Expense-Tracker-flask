@@ -2,7 +2,8 @@ from flask import Flask
 from .extensions import db, jwt
 
 from .auth.routes import auth_bp
-from .expenses.routes import expenses_bp
+from .expenses.routesExpenses import expenses_bp
+from .expenses.routesCategory import categories_bp
 from .reports.routes import reports_bp
 
 def create_app():
@@ -18,6 +19,7 @@ def create_app():
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(expenses_bp, url_prefix='/expenses')
+    app.register_blueprint(categories_bp, url_prefix='/categories')
     app.register_blueprint(reports_bp, url_prefix='/reports')
 
     return app

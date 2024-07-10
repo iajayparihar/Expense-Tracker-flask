@@ -1,11 +1,21 @@
-from marshmallow import Schema, fields
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from marshmallow import fields
+from .models import Category, Expense
 
-class ExpenseSchema(Schema):
-    id = fields.Int()
-    amount = fields.Float(required=True)
-    description = fields.Str(required=True)
-    category = fields.Str(required=True)
-    date = fields.Date()
+class CategorySchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Category
+        include_relationships = True
+        load_instance = True
 
+class ExpenseSchema(SQLAlchemyAutoSchema):
+    categories = fields.List(fields.Nested(CategorySchema))
+    class Meta:
+        model = Expense
+        include_relationships = True
+        load_instance = True
+
+category_schema = CategorySchema()
+categories_schema = CategorySchema(many=True)
 expense_schema = ExpenseSchema()
 expenses_schema = ExpenseSchema(many=True)
