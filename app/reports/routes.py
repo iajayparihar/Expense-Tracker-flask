@@ -13,11 +13,24 @@ def get_monthly_report(year, month):
         func.extract('year', Expense.date) == year,
         func.extract('month', Expense.date) == month
     ).all()
+    
     total_amount = sum(expense.amount for expense in expenses)
+    
+    expense_list = []
+    for exp in expenses:
+        categories = [category.name for category in exp.categories]
+        expense_list.append({
+            'id': exp.id,
+            'amount': exp.amount,
+            'description': exp.description,
+            'categories': categories,
+            'date': exp.date
+        })
+    
     return jsonify({
         'month': f'{year}-{month:02}',
         'total_amount': total_amount,
-        'expenses': [{'id': exp.id, 'amount': exp.amount, 'description': exp.description, 'category': exp.category, 'date': exp.date} for exp in expenses]
+        'expenses': expense_list
     })
 
 @reports_bp.route('/annual/<int:year>', methods=['GET'])
@@ -27,9 +40,22 @@ def get_annual_report(year):
     expenses = Expense.query.filter_by(user_id=user_id).filter(
         func.extract('year', Expense.date) == year
     ).all()
+    
     total_amount = sum(expense.amount for expense in expenses)
+    
+    expense_list = []
+    for exp in expenses:
+        categories = [category.name for category in exp.categories]
+        expense_list.append({
+            'id': exp.id,
+            'amount': exp.amount,
+            'description': exp.description,
+            'categories': categories,
+            'date': exp.date
+        })
+    
     return jsonify({
         'year': f'{year}',
         'total_amount': total_amount,
-        'expenses': [{'id': exp.id, 'amount': exp.amount, 'description': exp.description, 'category': exp.category, 'date': exp.date} for exp in expenses]
+        'expenses': expense_list
     })

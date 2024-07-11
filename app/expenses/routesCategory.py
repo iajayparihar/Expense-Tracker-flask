@@ -20,7 +20,7 @@ def add_category():
     db.session.commit()
     return jsonify(category_schema.dump(category)), 201
 
-@categories_bp.route('/<int:id>', methods=['PUT'])
+@categories_bp.route('/<int:id>', methods=['PUT','PATCH'])
 @jwt_required()
 def update_category(id):
     category = Category.query.get(id)
